@@ -1,9 +1,12 @@
 import sys
+import time # Para medir o tempo de execução
+
 from bfs import bfs
 from dfs import dfs
 from ids import ids
 from astar import astar
 from greedy import greedy
+
 
 def main():
     print("Escolha o algoritmo:")
@@ -22,6 +25,9 @@ def main():
     if len(start_state) != puzzle_size * puzzle_size:
         print("Erro: número incorreto de elementos para o tamanho especificado.")
         return
+    
+    #Inicio da contagem do tempo
+    start_time = time.time()
 
     if choice == '1':
         result = bfs(start_state, puzzle_size)
@@ -29,18 +35,38 @@ def main():
         result = dfs(start_state, puzzle_size)
     elif choice == '3':
         result = ids(start_state, puzzle_size)
-    elif choice == '4':
-        heuristic = input("Heurística (manhattan/hamming): ")
-        result = astar(start_state, puzzle_size, heuristic)
-    elif choice == '5':
-        heuristic = input("Heurística (manhattan/hamming): ")
-        result = greedy(start_state, puzzle_size, heuristic)
+    elif choice == '4' or choice == '5':
+        print("Escolha a heurística: ")
+        print("1. Manhattan")
+        print("2. Hamming")
+        heuristic_choice = input("Opção (1-2): ")
+        heuristic = 'manhattan' if heuristic_choice == '1' else 'hamming' if heuristic_choice == '2' else None
+        if heuristic is None:
+            print("Heurística inválida.")
+            return
+        if choice == '4':
+            result = astar(start_state, puzzle_size, heuristic)
+        else:
+            result = greedy(start_state, puzzle_size, heuristic)
+        
     else:
         print("Opção inválida.")
         return
+    
+    #Fim da contagem do tempo
+    end_time = time.time()
+    elapsed_time = end_time - start_time
 
-    print("\nResultado:")
-    print(result)
+    #Apresentação dos resultados
+    print("\nResultados:")
+    if result[0] is None:
+        print("Solução não encontrada.")
+    else:
+        print("Movimentos:", result[0])
+        print("Profundidade:", result[1])
+        print("Nós visitados:", result[2])
+        print("Tempo de execução: {:.4f} segundos".format(elapsed_time))
 
 if __name__ == "__main__":
     main()
+
