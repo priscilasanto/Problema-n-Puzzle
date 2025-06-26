@@ -4,7 +4,7 @@ def dls(state, goal, depth, path, visited, size):
     if state == goal:
         return path, len(path), visited
     if depth == 0:
-        return None, -1, visited  # Agora retorna os visitados mesmo quando a profundidade é 0
+        return None, -1, visited  #retorna os visitados mesmo quando a profundidade é 0
 
     visited.add(state)
     for neighbor, action in get_neighbors(state, size):

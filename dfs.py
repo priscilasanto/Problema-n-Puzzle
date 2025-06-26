@@ -1,7 +1,6 @@
-
 from utils import get_neighbors, get_goal_state
 
-def dfs(start_state: tuple, size: int, limit=10000):
+def dfs(start_state: tuple, size: int, limit=50000):
     visited = set()
     stack = [(start_state, [], 0)]
     goal = get_goal_state(size)
