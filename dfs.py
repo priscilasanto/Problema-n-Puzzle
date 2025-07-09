@@ -1,7 +1,6 @@
 from utils import get_neighbors, get_goal_state
 
-def dfs(start_state: tuple, size: int, limite: int = 50):
-    stack = [start_state]  # Fronteira
+def dfs(start_state: tuple, size: int, limit=50):
     visited = set()
     visited.add(start_state)
     path_map = {start_state: []}  # Mapeia o estado para o caminho até ele

@@ -1,5 +1,7 @@
 from utils import print_puzzle, get_neighbors
 
+from utils import print_puzzle, get_neighbors
+
 import sys
 import time # Para medir o tempo de execução
 
@@ -21,6 +23,7 @@ def print_search_path(path, start_state, size):
                 print_puzzle(neighbor, size)
                 state = neighbor
                 break
+
 
 def main():
     print("Escolha o algoritmo:")
