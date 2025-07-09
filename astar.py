@@ -1,13 +1,16 @@
-
-import heapq
+import heapq 
 from utils import get_neighbors, get_goal_state, manhattan_distance, misplaced_tiles
 
 def astar(start_state: tuple, size: int, heuristic='manhattan'):
-    goal = get_goal_state(size)
-    visited = set()
-    heap = []
-    g_score = {start_state: 0}
+    goal = get_goal_state(size) 
+    visited = set()             
+    heap = []                   
+    g_score = {start_state: 0}  
+
+    #Seleção da heurística
     h = manhattan_distance if heuristic == 'manhattan' else lambda s, g, sz: misplaced_tiles(s, g)
+
+    #Inicialização da Fila de Prioridade
     heapq.heappush(heap, (h(start_state, goal, size), 0, start_state, []))
 
     while heap:

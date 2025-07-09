@@ -1,3 +1,5 @@
+from utils import print_puzzle, get_neighbors
+
 import sys
 import time # Para medir o tempo de execução
 
@@ -7,6 +9,18 @@ from ids import ids
 from astar import astar
 from greedy import greedy
 
+# Função para visualizar o caminho do estado inicial até o objetivo
+def print_search_path(path, start_state, size):
+    state = start_state
+    print("\nÁrvore/Caminho da busca:")
+    print_puzzle(state, size)
+    for move in path:
+        for neighbor, action in get_neighbors(state, size):
+            if action == move:
+                print(f"Ação: {action}")
+                print_puzzle(neighbor, size)
+                state = neighbor
+                break
 
 def main():
     print("Escolha o algoritmo:")
@@ -62,10 +76,12 @@ def main():
     if result[0] is None:
         print("Solução não encontrada.")
     else:
+        print_search_path(result[0], start_state, puzzle_size)
         print("Movimentos:", result[0])
         print("Profundidade:", result[1])
         print("Nós visitados:", result[2])
         print("Tempo de execução: {:.4f} segundos".format(elapsed_time))
+
 
 if __name__ == "__main__":
     main()
