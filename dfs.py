@@ -1,22 +1,30 @@
-
 from utils import get_neighbors, get_goal_state
 
-def dfs(start_state: tuple, size: int, limit=10000):
+def dfs(start_state: tuple, size: int, limite: int = 50):
+    stack = [start_state]  # Fronteira
     visited = set()
-    stack = [(start_state, [], 0)]
+    visited.add(start_state)
+    path_map = {start_state: []}  # Mapeia o estado para o caminho até ele
+    depth_map = {start_state: 0}  # Mapeia o estado para sua profundidade
     goal = get_goal_state(size)
+    expanded_nodes = 0
 
     while stack:
-        state, path, depth = stack.pop()
-        if state in visited or depth > limit:
-            continue
-        visited.add(state)
+        state = stack.pop()
+        expanded_nodes += 1
 
         if state == goal:
-            return path, depth, len(visited)
+            return path_map[state], depth_map[state], expanded_nodes
 
-        for neighbor, action in reversed(get_neighbors(state, size)):
-            if neighbor not in visited:
-                stack.append((neighbor, path + [action], depth + 1))
+        if depth_map[state] < limite:
+            for neighbor, action in reversed(get_neighbors(state, size)):
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    path_map[neighbor] = path_map[state] + [action]
+                    depth_map[neighbor] = depth_map[state] + 1
+                    stack.append(neighbor)
 
-    return None, -1, len(visited)
+    return [], 0, expanded_nodes
+
+
+
